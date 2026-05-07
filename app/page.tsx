@@ -18,36 +18,81 @@ export default function Home() {
       {/* Content */}
       <div className="relative z-10">
 
-        {/* HEADER */}
-        <header className="max-w-6xl mx-auto px-6 py-6 flex justify-between items-center">
+        <header
+          className="
+    max-w-6xl mx-auto
+
+    px-4 sm:px-6
+    py-5
+
+    flex justify-between
+    items-start sm:items-center
+  "
+        >
 
           {/* LEFT */}
-          <div>
+          <div className="min-w-0">
 
-            <h1 className="text-7xl font-bold text-red-600">
+            <h1
+              className="
+        text-3xl sm:text-5xl lg:text-7xl
+
+        font-bold text-red-600
+
+        leading-tight
+      "
+            >
               MedAgent AI
             </h1>
 
-            <p className="text-xl mt-1 text-gray-800 dark:text-gray-300">
+            <p
+              className="
+        text-xs sm:text-base lg:text-xl
+
+        mt-1
+
+        text-gray-800 dark:text-gray-300
+      "
+            >
               AI-powered Public Health Intelligence System
             </p>
 
           </div>
 
           {/* RIGHT */}
-          <div className="flex items-center gap-3">
+          <div
+            className="
+      flex items-center
+
+      gap-2 sm:gap-3
+
+      shrink-0
+
+      ml-3
+    "
+          >
 
             <ThemeToggle />
 
             <Link
               href="/login"
+
               className="
-                bg-red-600 hover:bg-red-700
-                transition text-white
-                px-5 py-2 rounded-xl shadow-sm
-              "
+        bg-red-600 hover:bg-red-700
+
+        transition text-white
+
+        px-3 sm:px-5
+        py-2
+
+        rounded-xl shadow-sm
+
+        text-xs sm:text-base
+
+        whitespace-nowrap
+      "
             >
-              Admin Login
+              Admin
             </Link>
 
           </div>
@@ -55,9 +100,25 @@ export default function Home() {
         </header>
 
         {/* HERO */}
-        <section className="max-w-6xl mx-auto px-6 py-12">
+        <section
+          className="
+            max-w-6xl mx-auto
 
-          <div className="grid lg:grid-cols-2 gap-12 items-start">
+            px-4 sm:px-6
+
+            py-8 sm:py-12
+          "
+        >
+
+          <div
+            className="
+              grid lg:grid-cols-2
+
+              gap-10 lg:gap-12
+
+              items-start
+            "
+          >
 
             {/* LEFT SIDE */}
             <div>
@@ -65,8 +126,13 @@ export default function Home() {
               {/* TAG */}
               <p
                 className="
-                  text-sm uppercase tracking-[0.2em]
-                  text-red-600 font-semibold mb-4
+                  text-xs sm:text-sm
+
+                  uppercase tracking-[0.2em]
+
+                  text-red-600 font-semibold
+
+                  mb-4
                 "
               >
                 Population Health Intelligence
@@ -75,11 +141,14 @@ export default function Home() {
               {/* TITLE */}
               <h2
                 style={{ color: "black" }}
+
                 className="
-    text-3xl lg:text-4xl
-    font-bold leading-tight
-    dark:!text-white
-  "
+                  text-3xl sm:text-4xl lg:text-5xl
+
+                  font-bold leading-tight
+
+                  dark:!text-white
+                "
               >
                 AI-driven healthcare risk analysis and intervention planning.
               </h2>
@@ -87,10 +156,16 @@ export default function Home() {
               {/* DESCRIPTION */}
               <p
                 style={{ color: "#111827" }}
+
                 className="
-    mt-6 text-base leading-relaxed
-    dark:!text-gray-300
-  "
+                  mt-6
+
+                  text-sm sm:text-base lg:text-lg
+
+                  leading-relaxed
+
+                  dark:!text-gray-300
+                "
               >
 
                 MedAgent AI helps analyze population health risks,
@@ -100,7 +175,15 @@ export default function Home() {
               </p>
 
               {/* FEATURES */}
-              <div className="grid sm:grid-cols-2 gap-4 mt-10">
+              <div
+                className="
+                  grid sm:grid-cols-2
+
+                  gap-4
+
+                  mt-10
+                "
+              >
 
                 <FeatureCard
                   title="Risk Prediction"
@@ -127,7 +210,7 @@ export default function Home() {
             </div>
 
             {/* RIGHT SIDE */}
-            <div>
+            <div className="w-full">
 
               <PublicHealthForm />
 
@@ -141,8 +224,12 @@ export default function Home() {
         <footer
           className="
             max-w-6xl mx-auto
-            px-6 py-8
-            text-center text-sm
+
+            px-4 sm:px-6
+            py-8
+
+            text-center text-xs sm:text-sm
+
             text-gray-700 dark:text-gray-400
           "
         >
@@ -172,6 +259,7 @@ function FeatureCard({
     <div
       className="
         p-5 rounded-2xl
+
         border shadow-sm backdrop-blur
 
         bg-white/90 dark:bg-gray-900/70
@@ -184,6 +272,7 @@ function FeatureCard({
       <h3
         className="
           font-semibold
+
           text-gray-950 dark:text-white
         "
       >
@@ -194,6 +283,7 @@ function FeatureCard({
       <p
         className="
           text-sm mt-2 leading-relaxed
+
           text-gray-900 dark:text-gray-300
         "
       >
