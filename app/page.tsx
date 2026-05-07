@@ -92,7 +92,7 @@ export default function Home() {
         whitespace-nowrap
       "
             >
-              Admin
+              Admin Login
             </Link>
 
           </div>

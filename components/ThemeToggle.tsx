@@ -51,15 +51,24 @@ export default function ThemeToggle() {
 
         <button
             onClick={toggleTheme}
-            className={`
-                px-4 py-2 rounded-xl border transition-all duration-300 shadow-sm
-                ${dark
-                    ? "bg-white text-black border-white hover:bg-gray-200"
-                    : "bg-gray-900 text-white border-gray-900 hover:bg-black"
-                }
-            `}
+            className="
+    h-9 w-9
+
+    rounded-lg
+
+    flex items-center justify-center
+
+    transition
+
+    bg-white/80 dark:bg-gray-900/70
+
+    border border-gray-200
+    dark:border-gray-700
+
+    hover:scale-105
+"
         >
-            {dark ? "Light Mode" : "Dark Mode"}
+            {dark ? "☀️" : "🌙"}
         </button>
     );
 }
