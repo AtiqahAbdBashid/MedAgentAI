@@ -232,12 +232,12 @@ export default function AddPatientForm() {
                 />
 
                 <Select
-                    label="Sugar Intake"
+                    label="Blood Sugar Level"
                     value={form.sugar}
                     onChange={(v: string) =>
                         setForm({ ...form, sugar: v })
                     }
-                    options={["Low", "Medium", "High"]}
+                    options={["Low", "Normal", "High"]}
                 />
 
                 <Select
@@ -246,7 +246,7 @@ export default function AddPatientForm() {
                     onChange={(v: string) =>
                         setForm({ ...form, blood_pressure: v })
                     }
-                    options={["Normal", "High"]}
+                    options={["Low", "Normal", "High"]}
                 />
 
                 <Select

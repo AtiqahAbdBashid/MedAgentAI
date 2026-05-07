@@ -61,7 +61,7 @@ export default function PublicHealthForm() {
         try {
 
             const res = await fetch(
-                "/api/analyze",
+                "/api/personal-screening",
                 {
                     method: "POST",
 
@@ -206,12 +206,12 @@ export default function PublicHealthForm() {
                 />
 
                 <Select
-                    label="Sugar Intake"
+                    label="Blood Sugar Level"
                     value={form.sugar}
                     onChange={(v: string) =>
                         setForm({ ...form, sugar: v })
                     }
-                    options={["Low", "Medium", "High"]}
+                    options={["Low", "Normal", "High"]}
                 />
 
                 <Select
@@ -220,7 +220,7 @@ export default function PublicHealthForm() {
                     onChange={(v: string) =>
                         setForm({ ...form, bloodPressure: v })
                     }
-                    options={["Normal", "High"]}
+                    options={["Low", "Normal", "High"]}
                 />
 
             </div>

@@ -37,6 +37,8 @@ export default function PopulationDashboard() {
             "/api/analyze"
         );
 
+
+
         const result = await response.json();
 
         setData(result);
