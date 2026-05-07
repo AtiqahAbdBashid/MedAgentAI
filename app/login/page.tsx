@@ -16,7 +16,11 @@ export default function LoginPage() {
 
     const [error, setError] = useState("");
 
-    const handleLogin = async () => {
+    const handleLogin = async (
+        e: React.FormEvent
+    ) => {
+
+        e.preventDefault();
 
         setLoading(true);
         setError("");
@@ -77,7 +81,10 @@ export default function LoginPage() {
 
                 {/* FORM */}
 
-                <div className="space-y-4">
+                <form
+                    onSubmit={handleLogin}
+                    className="space-y-4"
+                >
 
                     <input
                         type="email"
@@ -151,7 +158,7 @@ export default function LoginPage() {
 
                     </button>
 
-                </div>
+                </form>
                 <div className="mt-3 text-center">
 
                     <Link
@@ -171,6 +178,6 @@ export default function LoginPage() {
             </div>
 
 
-        </main>
+        </main >
     );
 }

@@ -68,6 +68,75 @@ export default function AddPatientForm() {
 
         setLoading(false);
     };
+    const handleDownloadCSV = async () => {
+
+        const { data, error } =
+            await supabase
+                .from("patients")
+                .select("*");
+
+        if (error) {
+
+            alert(error.message);
+            return;
+        }
+
+        if (!data || data.length === 0) {
+
+            alert("No patient data found.");
+            return;
+        }
+
+        /* =========================================
+           CONVERT TO CSV
+        ========================================= */
+
+        const headers =
+            Object.keys(data[0]);
+
+        const csvRows = [
+
+            headers.join(","),
+
+            ...data.map((row) =>
+
+                headers.map((field) =>
+
+                    `"${row[field] ?? ""}"`
+
+                ).join(",")
+            ),
+        ];
+
+        const csvContent =
+            csvRows.join("\n");
+
+        /* =========================================
+           DOWNLOAD FILE
+        ========================================= */
+
+        const blob = new Blob(
+            [csvContent],
+            {
+                type: "text/csv",
+            }
+        );
+
+        const url =
+            URL.createObjectURL(blob);
+
+        const link =
+            document.createElement("a");
+
+        link.href = url;
+
+        link.download =
+            "patients.csv";
+
+        link.click();
+
+        URL.revokeObjectURL(url);
+    };
 
     return (
 
@@ -150,7 +219,7 @@ export default function AddPatientForm() {
                     onChange={(v: string) =>
                         setForm({ ...form, smoking: v })
                     }
-                    options={["yes", "no"]}
+                    options={["Yes", "No"]}
                 />
 
                 <Select
@@ -159,7 +228,7 @@ export default function AddPatientForm() {
                     onChange={(v: string) =>
                         setForm({ ...form, exercise: v })
                     }
-                    options={["yes", "no"]}
+                    options={["Yes", "No"]}
                 />
 
                 <Select
@@ -168,7 +237,7 @@ export default function AddPatientForm() {
                     onChange={(v: string) =>
                         setForm({ ...form, sugar: v })
                     }
-                    options={["low", "medium", "high"]}
+                    options={["Low", "Medium", "High"]}
                 />
 
                 <Select
@@ -177,15 +246,34 @@ export default function AddPatientForm() {
                     onChange={(v: string) =>
                         setForm({ ...form, blood_pressure: v })
                     }
-                    options={["normal", "high"]}
+                    options={["Normal", "High"]}
                 />
 
-                <Input
+                <Select
                     label="Region / State"
                     value={form.region}
                     onChange={(v: string) =>
                         setForm({ ...form, region: v })
                     }
+                    options={[
+
+                        "Johor",
+                        "Kedah",
+                        "Kelantan",
+                        "Melaka",
+                        "Negeri Sembilan",
+                        "Pahang",
+                        "Perak",
+                        "Perlis",
+                        "Pulau Pinang",
+                        "Sabah",
+                        "Sarawak",
+                        "Selangor",
+                        "Terengganu",
+                        "Kuala Lumpur",
+                        "Labuan",
+                        "Putrajaya",
+                    ]}
                 />
 
             </div>
@@ -208,6 +296,22 @@ export default function AddPatientForm() {
                     : "Add Patient"
                 }
 
+            </button>
+
+            <button
+                onClick={handleDownloadCSV}
+                className="
+        mt-3 w-full
+
+        bg-gray-800 hover:bg-gray-900
+        dark:bg-gray-700 dark:hover:bg-gray-600
+
+        transition text-white
+
+        py-3 rounded-xl font-medium
+    "
+            >
+                Download Patient CSV
             </button>
 
             {/* SUCCESS */}

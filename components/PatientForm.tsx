@@ -7,10 +7,10 @@ export default function PatientForm() {
         age: 30,
         height: 170,
         weight: 70,
-        smoking: "no",
-        exercise: "yes",
-        sugar: "medium",
-        bloodPressure: "normal"
+        smoking: "No",
+        exercise: "Yes",
+        sugar: "Medium",
+        bloodPressure: "Normal"
     });
 
     const submit = async () => {
