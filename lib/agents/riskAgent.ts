@@ -116,11 +116,11 @@ export async function runRiskAnalysisAgent() {
 
         /* FINAL CLASSIFICATION */
 
-        if (score >= 10) {
+        if (score >= 8) {
 
             high++;
 
-        } else if (score >= 5) {
+        } else if (score >= 4) {
 
             medium++;
 

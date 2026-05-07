@@ -20,6 +20,9 @@ export async function runInterventionPlanningAgent(
 
     const high = analysis.high_percentage;
 
+    const medium =
+        analysis.medium_percentage;
+
     let level = "Low";
 
     let confidence = 0.82;
@@ -62,7 +65,13 @@ export async function runInterventionPlanningAgent(
        MEDIUM RISK
     ========================================= */
 
-    else if (high >= 20) {
+    else if (
+
+        high >= 20 ||
+
+        medium >= 45
+
+    ) {
 
         level = "Medium";
 
