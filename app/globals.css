@@ -1,0 +1,94 @@
+@import "tailwindcss";
+@config "../tailwind.config.ts";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+/* DARK MODE CONTROLLED BY .dark CLASS */
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ===== Medical Background Pattern ===== */
+
+.bg-medical {
+  background-color: #f9fafb;
+  /* soft white */
+
+  background-image:
+    linear-gradient(to right, rgba(220, 38, 38, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(220, 38, 38, 0.03) 1px, transparent 1px);
+
+  background-size: 40px 40px;
+}
+
+/* Dark mode version */
+.dark .bg-medical {
+  background-color: #111827;
+
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+/* ===== ECG Pulse Animation ===== */
+
+/* Scrolling movement */
+@keyframes pulseScroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-pulseScroll {
+  animation: pulseScroll 10s linear infinite;
+}
+
+.pulse-line {
+  stroke: rgba(220, 38, 38, 0.65);
+  /* more visible red */
+  stroke-width: 1.6;
+  /* slightly thicker */
+  fill: none;
+}
+
+.pulse-glow {
+  stroke: rgba(220, 38, 38, 0.25);
+  /* subtle glow boost */
+  stroke-width: 3.5;
+  fill: none;
+  filter: blur(3px);
+}
+
+/* Subtle breathing glow */
+@keyframes glowPulse {
+
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+
+  50% {
+    opacity: 0.6;
+  }
+}
