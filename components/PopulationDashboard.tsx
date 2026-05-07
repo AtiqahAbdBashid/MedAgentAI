@@ -18,15 +18,66 @@ export default function PopulationDashboard() {
         "idle" | "analyzing" | "decision" | "impact"
     >("idle");
 
-    const runSimulation = async (
-        mode = "random"
-    ) => {
+    const [agentStep, setAgentStep] =
+        useState(0);
+
+    const runSimulation = async () => {
 
         setLoading(true);
 
         setShowAfter(false);
 
         setStage("analyzing");
+
+        setAgentStep(0);
+
+        setData(null);
+
+        const response = await fetch(
+            "/api/analyze"
+        );
+
+        const result = await response.json();
+
+        setData(result);
+
+        setTimeout(() => {
+            setAgentStep(1);
+        }, 500);
+
+        setTimeout(() => {
+            setAgentStep(2);
+        }, 1200);
+
+        setTimeout(() => {
+            setAgentStep(3);
+        }, 2000);
+
+        setTimeout(() => {
+            setAgentStep(4);
+        }, 2800);
+
+        setTimeout(() => {
+            setStage("decision");
+        }, 1200);
+
+        setTimeout(() => {
+            setStage("impact");
+            setShowAfter(true);
+        }, 2500);
+
+        setLoading(false);
+    };
+
+    const runScenarioSimulation = async (
+        mode: string
+    ) => {
+
+        setLoading(true);
+
+        setShowAfter(false);
+
+        setAgentStep(0);
 
         setData(null);
 
@@ -36,15 +87,52 @@ export default function PopulationDashboard() {
 
         const result = await res.json();
 
-        setData(result);
+        const enriched = await fetch(
+            "/api/scenario",
+            {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type":
+                        "application/json",
+                },
+
+                body: JSON.stringify(result),
+            }
+        );
+
+        const finalData =
+            await enriched.json();
+
+        setData(finalData);
+
+        setTimeout(() => {
+            setAgentStep(1);
+        }, 500);
+
+        setTimeout(() => {
+            setAgentStep(2);
+        }, 1200);
+
+        setTimeout(() => {
+            setAgentStep(3);
+        }, 2000);
+
+        setTimeout(() => {
+            setAgentStep(4);
+        }, 2800);
 
         setTimeout(() => {
             setStage("decision");
         }, 1200);
 
         setTimeout(() => {
+
             setStage("impact");
+
             setShowAfter(true);
+
         }, 2500);
 
         setLoading(false);
@@ -180,7 +268,7 @@ export default function PopulationDashboard() {
 
                         text-gray-600 dark:text-gray-400
                     ">
-                                    Configure and execute population healthcare risk simulations.
+                                    Upload healthcare datasets or execute simulation scenarios for AI-driven population risk analysis.
                                 </p>
 
                             </div>
@@ -222,7 +310,7 @@ export default function PopulationDashboard() {
 
                     text-gray-700 dark:text-gray-300
                 ">
-                                AI-driven population health simulation engine operational.
+                                Multi-agent healthcare intelligence engine operational.
                             </p>
 
                         </div>
@@ -238,7 +326,7 @@ export default function PopulationDashboard() {
                         {/* MAIN BUTTON */}
 
                         <button
-                            onClick={() => runSimulation("random")}
+                            onClick={runSimulation}
 
                             disabled={loading}
 
@@ -262,8 +350,8 @@ export default function PopulationDashboard() {
                             {loading
                                 ? "Processing..."
                                 : data
-                                    ? "Run Simulation Again"
-                                    : "Run AI Simulation"
+                                    ? "Analyze Dataset Again"
+                                    : "Analyze Uploaded Dataset"
                             }
 
                         </button>
@@ -277,7 +365,7 @@ export default function PopulationDashboard() {
                             {/* HIGH */}
 
                             <button
-                                onClick={() => runSimulation("high")}
+                                onClick={() => runScenarioSimulation("high")}
 
                                 disabled={loading}
 
@@ -301,7 +389,7 @@ export default function PopulationDashboard() {
                             {/* MEDIUM */}
 
                             <button
-                                onClick={() => runSimulation("medium")}
+                                onClick={() => runScenarioSimulation("medium")}
 
                                 disabled={loading}
 
@@ -325,7 +413,7 @@ export default function PopulationDashboard() {
                             {/* LOW */}
 
                             <button
-                                onClick={() => runSimulation("low")}
+                                onClick={() => runScenarioSimulation("low")}
 
                                 disabled={loading}
 
@@ -354,6 +442,114 @@ export default function PopulationDashboard() {
 
             </div>
 
+            {/* AI AGENT WORKFLOW */}
+
+            {(loading || data) && (
+
+                <div
+                    className="
+            rounded-2xl
+
+            border border-cyan-200
+            dark:border-cyan-900
+
+            bg-gradient-to-br
+            from-white
+            to-cyan-50
+
+            dark:from-gray-900
+            dark:to-cyan-950/20
+
+            p-6 shadow-sm
+        "
+                >
+
+                    {/* HEADER */}
+
+                    <div className="mb-6">
+
+                        <h3 className="
+                text-xl font-bold
+
+                text-gray-900 dark:text-white
+            ">
+                            AI Agent Workflow
+                        </h3>
+
+                        <p className="
+                text-sm mt-1
+
+                text-gray-600 dark:text-gray-400
+            ">
+                            Multi-agent healthcare intelligence pipeline executing population analysis and intervention planning.
+                        </p>
+
+                    </div>
+
+                    {/* AGENTS */}
+
+                    <div className="space-y-4">
+
+                        <WorkflowStep
+                            active={agentStep >= 1}
+
+                            title="Data Agent"
+
+                            description={
+                                data
+
+                                    ? `${data.summary.total_population} healthcare records processed from uploaded dataset.`
+
+                                    : "Processing uploaded healthcare dataset..."
+                            }
+                        />
+
+                        <WorkflowStep
+                            active={agentStep >= 2}
+
+                            title="Risk Analysis Agent"
+
+                            description={
+                                data
+
+                                    ? `Population vulnerability classified with ${data.summary.high_percentage.toFixed(1)}% high-risk exposure detected.`
+
+                                    : "Analyzing healthcare vulnerability indicators..."
+                            }
+                        />
+
+                        <WorkflowStep
+                            active={agentStep >= 3}
+
+                            title="Intervention Planning Agent"
+
+                            description={
+                                data
+
+                                    ? `${data.decision.action}.`
+
+                                    : "Allocating preventive healthcare interventions..."
+                            }
+                        />
+
+                        <WorkflowStep
+                            active={agentStep >= 4}
+
+                            title="Outcome Prediction Agent"
+
+                            description={
+                                data
+
+                                    ? `Projected ${data.intervention.reduction.toFixed(1)}% reduction in high-risk population exposure.`
+
+                                    : "Simulating projected healthcare outcomes..."
+                            }
+                        />
+
+                    </div>
+
+                </div>
+            )}
             {/* EMPTY STATE */}
 
             {!data && stage === "idle" && (
@@ -466,6 +662,72 @@ export default function PopulationDashboard() {
 
                     <PopulationChart data={data.summary} />
 
+                    {/* POPULATION SIZE */}
+
+                    <div
+                        className="
+        mt-6
+
+        rounded-2xl
+
+        border border-blue-200
+        dark:border-blue-900
+
+        bg-gradient-to-br
+        from-blue-50
+        to-white
+
+        dark:from-blue-950/20
+        dark:to-gray-900
+
+        p-5
+    "
+                    >
+
+                        <p className="
+        text-sm font-medium
+
+        text-blue-700 dark:text-blue-400
+    ">
+                            Uploaded Population Dataset
+                        </p>
+
+                        <div className="
+        mt-3
+
+        flex items-end gap-3
+    ">
+
+                            <p className="
+            text-5xl font-bold
+
+            text-gray-900 dark:text-white
+        ">
+                                {data.summary.total_population}
+                            </p>
+
+                            <p className="
+            text-sm mb-1
+
+            text-gray-600 dark:text-gray-400
+        ">
+                                healthcare records analyzed
+                            </p>
+
+                        </div>
+
+                        <p className="
+        mt-3 text-sm leading-relaxed
+
+        text-gray-700 dark:text-gray-300
+    ">
+
+                            AI agents processed uploaded healthcare records to generate population-level risk analysis and intervention planning insights.
+
+                        </p>
+
+                    </div>
+
                     {/* STATS */}
 
                     <div className="
@@ -547,12 +809,7 @@ export default function PopulationDashboard() {
                         bg: "bg-red-50 border-red-300",
                         text: "text-red-700",
                         cardBg: "bg-red-100",
-                        actions: [
-                            "🚑 Deploy emergency medical teams",
-                            "🏥 Increase hospital capacity",
-                            "📊 Immediate mass screening",
-                            "📢 Public health alerts"
-                        ]
+
                     },
 
                     Medium: {
@@ -561,12 +818,7 @@ export default function PopulationDashboard() {
                         bg: "bg-yellow-50 border-yellow-300",
                         text: "text-yellow-700",
                         cardBg: "bg-yellow-100",
-                        actions: [
-                            "🩺 Deploy screening units",
-                            "📢 Launch awareness campaigns",
-                            "🥗 Promote lifestyle changes",
-                            "📊 Monitor population trends"
-                        ]
+
                     },
 
                     Low: {
@@ -575,12 +827,7 @@ export default function PopulationDashboard() {
                         bg: "bg-green-50 border-green-300",
                         text: "text-green-700",
                         cardBg: "bg-green-100",
-                        actions: [
-                            "📊 Continue monitoring",
-                            "🧍 Maintain current resources",
-                            "📈 Track long-term trends",
-                            "✅ No immediate action required"
-                        ]
+
                     }
                 };
 
@@ -768,31 +1015,29 @@ export default function PopulationDashboard() {
 
                                 </div>
 
-                                {/* AI REASONING */}
-
                                 <div className="
-                    rounded-xl p-5
+    rounded-xl p-5
 
-                    bg-white/70 dark:bg-gray-800/60
+    bg-white/70 dark:bg-gray-800/60
 
-                    border border-gray-200
-                    dark:border-gray-700
-                ">
+    border border-gray-200
+    dark:border-gray-700
+">
 
                                     <p className="
-                        text-sm font-semibold mb-2
+        text-sm font-semibold mb-2
 
-                        text-gray-900 dark:text-white
-                    ">
+        text-gray-900 dark:text-white
+    ">
                                         AI Reasoning
                                     </p>
 
                                     <p className="
-                        text-sm leading-relaxed
+        text-sm leading-relaxed
 
-                        text-gray-700 dark:text-gray-300
-                    ">
-                                        Current population health distribution suggests that proactive intervention could significantly reduce projected healthcare burden and improve long-term regional health stability.
+        text-gray-700 dark:text-gray-300
+    ">
+                                        {data.intervention.reasoning}
                                     </p>
 
                                 </div>
@@ -823,7 +1068,7 @@ export default function PopulationDashboard() {
 
                     text-gray-900 dark:text-white
                 ">
-                                    {data.decision.action}
+                                    {data.intervention.recommendation}
                                 </p>
 
                             </div>
@@ -844,7 +1089,7 @@ export default function PopulationDashboard() {
                     grid md:grid-cols-2 gap-3
                 ">
 
-                                    {current.actions.map((a, i) => (
+                                    {data.decision.planned_actions.map((a: string, i: number) => (
 
                                         <div
                                             key={i}
@@ -1245,6 +1490,113 @@ export default function PopulationDashboard() {
                 </div>
             )}
 
+
+        </div>
+    );
+}
+
+function WorkflowStep({
+
+    active,
+
+    title,
+
+    description,
+
+}: any) {
+
+    return (
+
+        <div
+            className={`
+                rounded-xl p-4
+
+                border transition-all duration-500
+
+                ${active
+
+                    ? `
+                        border-cyan-300
+                        dark:border-cyan-800
+
+                        bg-cyan-50
+                        dark:bg-cyan-950/20
+
+                        opacity-100
+                    `
+
+                    : `
+                        border-gray-200
+                        dark:border-gray-700
+
+                        bg-white/60
+                        dark:bg-gray-900/40
+
+                        opacity-50
+                    `
+                }
+            `}
+        >
+
+            <div className="
+                flex items-start gap-4
+            ">
+
+                {/* STATUS */}
+
+                <div
+                    className={`
+                        h-10 w-10 rounded-xl
+
+                        flex items-center justify-center
+
+                        text-lg font-bold
+
+                        ${active
+
+                            ? `
+                                bg-cyan-600
+                                text-white
+                            `
+
+                            : `
+                                bg-gray-300
+                                dark:bg-gray-700
+
+                                text-gray-600
+                                dark:text-gray-400
+                            `
+                        }
+                    `}
+                >
+
+                    {active ? "✓" : "•"}
+
+                </div>
+
+                {/* CONTENT */}
+
+                <div>
+
+                    <h4 className="
+                        font-semibold
+
+                        text-gray-900 dark:text-white
+                    ">
+                        {title}
+                    </h4>
+
+                    <p className="
+                        text-sm mt-1 leading-relaxed
+
+                        text-gray-600 dark:text-gray-400
+                    ">
+                        {description}
+                    </p>
+
+                </div>
+
+            </div>
 
         </div>
     );

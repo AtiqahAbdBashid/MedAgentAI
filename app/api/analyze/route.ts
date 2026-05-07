@@ -1,77 +1,28 @@
-import OpenAI from "openai";
+import { NextResponse } from "next/server";
 
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-});
+import {
+    runHealthcareOrchestrator
+} from "@/lib/agents/orchestrator";
 
-export async function POST(req: Request) {
+export async function GET() {
 
     try {
 
-        const body = await req.json();
+        const result =
+            await runHealthcareOrchestrator();
 
-        const prompt = `
-You are a healthcare AI assistant.
-
-Analyze this patient data:
-
-Age: ${body.age}
-Gender: ${body.gender}
-BMI: ${body.bmi}
-Smoking: ${body.smoking}
-Exercise: ${body.exercise}
-Sugar Intake: ${body.sugar}
-Blood Pressure: ${body.bloodPressure}
-
-Provide:
-
-1. Risk Level (Low, Medium, High)
-2. Brief medical reasoning
-3. Recommended actions
-
-Respond ONLY in JSON format like:
-
-{
-  "risk": "",
-  "reasoning": "",
-  "recommendations": []
-}
-`;
-
-        const response =
-            await openai.chat.completions.create({
-
-                model: "gpt-4.1-mini",
-
-                messages: [
-                    {
-                        role: "user",
-                        content: prompt,
-                    },
-                ],
-
-                response_format: {
-                    type: "json_object",
-                },
-            });
-
-        const content =
-            response.choices[0].message.content;
-
-        return Response.json(
-            JSON.parse(content || "{}")
-        );
+        return NextResponse.json(result);
 
     } catch (error) {
 
-        console.log(error);
+        console.error(error);
 
-        return Response.json(
+        return NextResponse.json(
             {
-                error: "AI analysis failed",
+                error: "Analysis failed"
             },
             {
-                status: 500,
+                status: 500
             }
         );
     }
