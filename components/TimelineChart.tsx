@@ -41,18 +41,17 @@ export default function TimelineChart({ data }: any) {
 
         setTimelineData([]);
 
-        let i = 0;
+        let step = 1;
+
+        setTimelineData([generated[0]]);
 
         const interval = setInterval(() => {
 
-            setTimelineData((prev) => [
-                ...prev,
-                generated[i]
-            ]);
+            setTimelineData(generated.slice(0, step + 1));
 
-            i++;
+            step++;
 
-            if (i >= generated.length) {
+            if (step >= generated.length) {
                 clearInterval(interval);
             }
 

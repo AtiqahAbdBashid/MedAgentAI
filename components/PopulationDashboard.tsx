@@ -23,52 +23,66 @@ export default function PopulationDashboard() {
 
     const runSimulation = async () => {
 
-        setLoading(true);
+        try {
 
-        setShowAfter(false);
+            setLoading(true);
 
-        setStage("analyzing");
+            setShowAfter(false);
 
-        setAgentStep(0);
+            setStage("analyzing");
 
-        setData(null);
+            setAgentStep(0);
 
-        const response = await fetch(
-            "/api/analyze"
-        );
+            setData(null);
 
+            const response = await fetch("/api/analyze");
 
+            if (!response.ok) {
+                throw new Error("Simulation request failed");
+            }
 
-        const result = await response.json();
+            const result = await response.json();
 
-        setData(result);
+            setData(result);
 
-        setTimeout(() => {
-            setAgentStep(1);
-        }, 500);
+            setTimeout(() => {
+                setAgentStep(1);
+            }, 500);
 
-        setTimeout(() => {
-            setAgentStep(2);
-        }, 1200);
+            setTimeout(() => {
+                setAgentStep(2);
+            }, 1200);
 
-        setTimeout(() => {
-            setAgentStep(3);
-        }, 2000);
+            setTimeout(() => {
+                setAgentStep(3);
+            }, 2000);
 
-        setTimeout(() => {
-            setAgentStep(4);
-        }, 2800);
+            setTimeout(() => {
+                setAgentStep(4);
+            }, 2800);
 
-        setTimeout(() => {
-            setStage("decision");
-        }, 1200);
+            setTimeout(() => {
+                setStage("decision");
+            }, 1200);
 
-        setTimeout(() => {
-            setStage("impact");
-            setShowAfter(true);
-        }, 2500);
+            setTimeout(() => {
+                setStage("impact");
+                setShowAfter(true);
+            }, 2500);
 
-        setLoading(false);
+        } catch (error) {
+
+            console.error(
+                "Simulation Error:",
+                error
+            );
+
+        } finally {
+
+            setTimeout(() => {
+                setLoading(false);
+            }, 3200);
+        }
     };
 
     const runScenarioSimulation = async (
@@ -83,9 +97,7 @@ export default function PopulationDashboard() {
 
         setData(null);
 
-        const res = await fetch(
-            `http://127.0.0.1:8000/simulate-population?size=100&mode=${mode}`
-        );
+        const res = await fetch("/api/analyze");
 
         const result = await res.json();
 
@@ -798,7 +810,9 @@ export default function PopulationDashboard() {
                 </div>
             )}
 
+
             {/* DECISION */}
+
             {data && stage === "impact" && (() => {
 
                 const level = data.decision.level;
@@ -838,6 +852,7 @@ export default function PopulationDashboard() {
 
                 return (
 
+
                     <div
                         className={`
             rounded-2xl
@@ -858,6 +873,37 @@ export default function PopulationDashboard() {
                             }
         `}
                     >
+                        {/* SECTION HEADER */}
+
+                        <div className="p-6 pb-0">
+
+                            <div className="flex items-center gap-3">
+
+
+
+                                <div>
+
+                                    <h2 className="
+                text-2xl font-bold
+
+                text-gray-900 dark:text-white
+            ">
+                                        Autonomous Healthcare Intervention Coordination
+                                    </h2>
+
+                                    <p className="
+                text-sm mt-1
+
+                text-gray-600 dark:text-gray-400
+            ">
+                                        AI agents autonomously evaluate healthcare risk conditions and coordinate preventive intervention strategies.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
 
                         {/* TOP HEADER */}
 
@@ -898,7 +944,7 @@ export default function PopulationDashboard() {
                                         ? "🚨"
 
                                         : level === "Medium"
-                                            ? "🩺"
+                                            ? "⚠️"
 
                                             : "✅"
                                     }
