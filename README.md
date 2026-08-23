@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+MEDAGENT AI
+AI-Powered Healthcare Intelligence & Decision Support Platform
 
-## Getting Started
+Overview:
+MedAgent AI is an AI-powered healthcare platform that analyzes population health data, identifies risk levels, recommends interventions, predicts outcomes, and tracks patient progress over time.
 
-First, run the development server:
+It combines multi-agent AI, healthcare analytics, and longitudinal patient monitoring to transform healthcare data into actionable insights while keeping healthcare professionals in control of final decisions.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Key Features:
+Multi-Agent AI — Risk Analysis, Intervention Planning, Outcome Prediction, and Orchestration
+Population Health Analysis — Classifies populations into High, Medium, and Low Risk
+Intervention Planning — Generates AI-assisted healthcare strategies and reasoning
+Outcome Simulation — Estimates potential impact of healthcare interventions
+Patient Monitoring — Add, update, and manage patient records
+Patient History & Trends — Visualize longitudinal health changes and detect improvement or deterioration
+Secure Data Management — Authentication and database access controls
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Technology Stack:
+Frontend - Next.js, React, TypeScript, Tailwind CSS, Recharts
+Backend & AI - Next.js API Routes, Python / FastAPI, OpenAI API, Multi-agent orchestration
+Database & Deployment - Supabase / PostgreSQL, Supabase Authentication & RLS, Vercel
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Architecture:
+Healthcare Data
+      ↓
+Risk Analysis Agent
+      ↓
+Intervention Planning Agent
+      ↓
+Outcome Prediction Agent
+      ↓
+Healthcare Orchestrator
+      ↓
+Actionable Insights
+      ↓
+Healthcare Professional
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Problem It Solves:
+Healthcare organizations manage large amounts of health data but often struggle to turn it into timely, actionable information.
 
-## Learn More
+MedAgent AI helps address this by providing:
+Early identification of high-risk populations
+AI-assisted intervention planning
+Healthcare outcome simulation
+Longitudinal patient monitoring
+Visual health trend analysis
+Responsible AI
 
-To learn more about Next.js, take a look at the following resources:
+MedAgent AI is designed as a healthcare decision-support system, not an autonomous medical system. AI recommendations are intended to assist healthcare professionals, who remain responsible for clinical interpretation and final decisions.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Disclaimer: MedAgent AI is a prototype developed for demonstration and research purposes. It is not intended to diagnose, treat, or replace qualified medical professionals.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+LINK FOR PROJECT: https://medagentai.vercel.app/
